@@ -53,7 +53,7 @@ In short, the main tunable parameters I had to focus on were the number of concu
 
 ### Not Quite the Silver Bullet 
 
-As much as I would like to say this fully, automatically worked and produced the correct results, it didn't work 100%. However, by watching the response times in the output, I was able to tell when it was choosing the wrong characters by looking at alternative outliers. When that happened, I would stop the script, take the characters cracked so far, and replace the last "cracked" character with the one *I* thought it should be, and I would pass that as the new `already_known` argument before restarting. These "checkpoints", if you will, become sort of obvious when you notice that after a certain character is "cracked", all of the next guesses produce somewhat consistent response times (i.e. they're all wrong because the previous character was wrong). 
+As much as I would like to say this fully, automatically worked and produced the correct results, it didn't work 100%. However, by watching the response times in the output, I was able to tell when it was choosing the wrong characters by looking at alternative outliers. These "checkpoints", if you will, become sort of obvious when you notice that after a certain character is "cracked", all of the next guesses produce somewhat consistent response times (i.e. they're all wrong because the previous character was wrong). When that happened, I would stop the script, take the characters cracked so far, and replace the last "cracked" character with the one *I* thought it should be, and I would pass that string so far as the new `already_known` attack parameter argument before restarting.  
 
 ### Password Found! 867-5309 / Jenny
 
