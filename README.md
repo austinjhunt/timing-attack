@@ -26,10 +26,11 @@ At the highest level, here's what we know about how the password is verified on 
 
 ### Obtaining Password Length Bounds from Entropy Requirements
 As for the password length: the given entropy is $35 \leq (H(X) = \log_2(N)) \leq 45$. Our alphabet length, i.e. our total number of symbols, is 10, so $N = 10^x$ where x gives the bounds for our password length (the number of samples). That is, $35 \leq (H(X) = \log_2(10^x)) \leq 45$. Below is my handwritten solution for finding `x`: 
+
 ![finding x by solving the inequality](IMG_5156.jpg)
 
-So, x is either 11, 12, or 13 characters long, which means that in total, we have 
-$10^11 + 10^12 + 10^13$ possible passwords.  
+So, $x \in \{11,12,13\}$, meaning the password is either 11, 12, or 13 characters long, which means that in total, we have 
+$10^11 + 10^12 + 10^13$ possible passwords.  But because of the timing attack vulnerability, not all of those passwords need to be checked!
 
 ### Confusing Results
 Interesting phenomenon... even though 42a is the correct first substring on the demo host, 42a produces the smallest response time among all other first 3-char substring guesses.
