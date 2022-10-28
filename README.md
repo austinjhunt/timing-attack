@@ -30,14 +30,14 @@ As for the password length: the given entropy is $35 \leq (H(X) = \log_2(N)) \le
 ![finding x by solving the inequality](IMG_5156.jpg)
 
 So, $x \in \{11,12,13\}$, meaning the password is either 11, 12, or 13 characters long, which means that in total, we have 
-$10^11 + 10^12 + 10^13$ possible passwords.  But because of the timing attack vulnerability, not all of those passwords need to be checked!
+$10^11 + 10^12 + 10^13$ possible passwords.  But because of the timing attack vulnerability, not all of those passwords need to be checked! 
 
 ### Confusing Results
 Interesting phenomenon... even though 42a is the correct first substring on the demo host, 42a produces the smallest response time among all other first 3-char substring guesses.
 ![what?](what.jpg)
 Because of this, I added a more general check - instead of simply looking for a signficantly higher response time per character position to crack new characters, I began looking for a signficantly *different* response time. I used the numpy-based outlier rejection function proposed [here](https://stackoverflow.com/questions/62802061/python-find-outliers-inside-a-list) but adjusted it to extract outliers rather than reject them. After a bit of tuning on the m argument, I got the expected behavior using the demo host. 
 
-I also tried to leverage multiprocessing and multithreading using the [concurrent.futures](https://docs.python.org/3/library/concurrent.futures.html) layer but that was causing my time measurements to be highly wonky, so I ended up simplifying things back down and removing most of the multiprocessing/multithreading logic. Even with the basic multithreading in the `guess_password_repeated` function, I couldn't get expected behavior if the max_workers value was greater than 4. 
+I also tried to leverage multiprocessing and multithreading using the [concurrent.futures](https://docs.python.org/3/library/concurrent.futures.html) layer but that was causing my time measurements to be highly wonky, so I ended up simplifying things back down and removing most of the multiprocessing/multithreading logic. Even when using some basic multithreading in the `guess_password_repeated` function, I couldn't get expected behavior if the max_workers value was greater than 4. I ended up changing that function to use a `ProcessPoolExecutor` rather than a `ThreadPoolExecutor` due to some docs I was reading about threading and HTTP response time measurements. 
 
 ### Polishing the Automation
 
