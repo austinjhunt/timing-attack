@@ -57,7 +57,7 @@ As much as I would like to say this fully, automatically worked and produced the
 
 ### Password Found! 867-5309 / Jenny
 
-Ultimately, by following this partially-automated-but-partially-manual approach, I found the correct password: `5558675309555`. The funny thing about this as I was working on this project, that [Tommy Tutone song](https://www.youtube.com/watch?v=6WTdTwcmxyo) was playing in my head and I consciously told myself **that's not the answer because the entropy is too high**. I didn't even think about it being padded on either side. 
+Ultimately, by following this partially-automated-but-partially-manual approach, I found the correct password: `5558675309555`. The funny thing is that as I was working on this project, that [Tommy Tutone song](https://www.youtube.com/watch?v=6WTdTwcmxyo) was playing in my head and I consciously told myself **that's not the answer because the entropy is too high**. I didn't even think about it being padded on either side. 
 
 ### Running It
 ```
