@@ -27,14 +27,14 @@ At the highest level, here's what we know about how the password is verified on 
 ### Obtaining Password Length Bounds from Entropy Requirements
 As for the password length: the given entropy is $35 \leq (H(X) = \log_2(N)) \leq 45$. Our alphabet length, i.e. our total number of symbols, is 10, so $N = 10^x$ where x gives the bounds for our password length (the number of samples). That is, $35 \leq (H(X) = \log_2(10^x)) \leq 45$. Below is my handwritten solution for finding `x`: 
 
-![finding x by solving the inequality](IMG_5156.jpg)
+![finding x by solving the inequality](img/IMG_5156.jpg)
 
 So, $x \in \{11,12,13\}$, meaning the password is either 11, 12, or 13 characters long, which means that in total, we have 
 $10^11 + 10^12 + 10^13$ possible passwords.  But because of the timing attack vulnerability, not all of those passwords need to be checked! 
 
 ### Confusing Results
 Interesting phenomenon... even though 42a is the correct first substring on the demo host, 42a produces the smallest response time among all other first 3-char substring guesses.
-![what?](what.jpg)
+![what?](img/what.jpg)
 Because of this, I added a more general check - instead of simply looking for a signficantly higher response time per character position to crack new characters, I began looking for a signficantly *different* response time. I used the numpy-based outlier rejection function proposed [here](https://stackoverflow.com/questions/62802061/python-find-outliers-inside-a-list) but adjusted it to extract outliers rather than reject them. After a bit of tuning on the m argument, I got the expected behavior using the demo host. 
 
 I also tried to leverage multiprocessing and multithreading using the [concurrent.futures](https://docs.python.org/3/library/concurrent.futures.html) layer but that was causing my time measurements to be highly wonky, so I ended up simplifying things back down and removing most of the multiprocessing/multithreading logic. Even when using some basic multithreading in the `guess_password_repeated` function, I couldn't get expected behavior if the max_workers value was greater than 4. I ended up changing that function to use a `ProcessPoolExecutor` rather than a `ThreadPoolExecutor` due to some docs I was reading about threading and HTTP response time measurements. 
@@ -58,3 +58,11 @@ As much as I would like to say this fully, automatically worked and produced the
 ### Password Found! 867-5309 / Jenny
 
 Ultimately, by following this partially-automated-but-partially-manual approach, I found the correct password: `5558675309555`. The funny thing about this as I was working on this project, that [Tommy Tutone song](https://www.youtube.com/watch?v=6WTdTwcmxyo) was playing in my head and I consciously told myself **that's not the answer because the entropy is too high**. I didn't even think about it being padded on either side. 
+
+### Running It
+```
+python3 -m venv venv 
+source venv/bin/activate
+pip install -r requirements.txt
+python3 main.py
+```
