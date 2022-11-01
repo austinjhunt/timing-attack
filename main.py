@@ -4,7 +4,10 @@ from string import digits, ascii_letters
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor, wait, ALL_COMPLETED
 import numpy as np 
 import sys
+import os 
+from dotenv import load_dotenv
 
+load_dotenv()
 
 class TimeAttacker:
     def __init__(self, attack_params):
@@ -102,9 +105,9 @@ class TimeAttacker:
                     padding_length=0)  
 
 if __name__ == "__main__": 
-        
-    REAL_HOST = "https://qrxjmztf2h.execute-api.us-west-2.amazonaws.com/prod"
-    DEMO_HOST = "https://qrxjmztf2h.execute-api.us-west-2.amazonaws.com/prod/example"
+    # protect the hosts in public repo. could get expensive.
+    REAL_HOST =  os.environ.get('REAL_HOST')
+    DEMO_HOST = os.environ.get('DEMO_HOST')
     attack_params = {
         'demo': {
             'url': DEMO_HOST,
@@ -117,10 +120,9 @@ if __name__ == "__main__":
             'max_password_length': 13,
             'min_password_length': 11,
             'alphabet': digits, 
-            'already_known': '5558675309555'
+            'already_known': '5558675309555' # full correct pw
         }
     }
     demo_attacker = TimeAttacker(attack_params=attack_params['assignment'])  
     demo_attacker.attack() 
-
-    # CORRECT PASSWORD FOUND! 5558675309555
+ 
